@@ -60,3 +60,26 @@ int	is_number(char *num)
 	}
 	return (1);
 }
+
+void	fill_nums(t_nums *nums, char **nums_str, int size)
+{
+	nums->num_of_phs = ft_atoi(nums_str[1]);
+	nums->td = ft_atoi(nums_str[2]);
+	nums->te = ft_atoi(nums_str[3]);
+	nums->ts = ft_atoi(nums_str[4]);
+	nums->meals = -1;
+	if (size == 6)
+		nums->meals = ft_atoi(nums_str[5]);
+}
+
+int	non_number(char **nums, int size)
+{
+	int i;
+
+	i = 0;
+	while (++i < size)
+		if (is_number(nums[i]) == 0)
+			return (1);
+	return (0);
+}
+

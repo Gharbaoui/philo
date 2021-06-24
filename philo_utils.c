@@ -1,38 +1,76 @@
 #include "philo.h"
 
-int fill_info(t_info *ps, char **args, int argc)
+int	init_philos(int argc, char **argv, t_philo **start)
 {
-    int i;
+	t_nums nums;
+	t_philo **all;
 
-    i = 0;
-    while  (++i < 6)
-        if (is_number(args[i]) == 0)
-            return (1);
-    ps->number_of_ph = ft_atoi(args[1]);
-    ps->forks_av = ps->number_of_ph;
-    ps->td = ft_atoi(args[2]);
-    ps->te = ft_atoi(args[3]);
-    ps->ts = ft_atoi(args[4]);
-    ps->philos = malloc(sizeof(t_philos));
-    ps->philos->total = ps->number_of_ph;
-    fill_philo(ps->philos);
-    if (argc == 6)
-        ps->num_of_meals = ft_atoi(args[5]);
-    else
-        ps->num_of_meals = 0;
-    return (0);
+	if (non_number(argv, argc))
+		return (0);
+	fill_nums(&nums, argv, argc);
+	all = all_philos(nums);
+	*start = *all;
+	wire_philos(all, nums.num_of_phs);
+	return (1);
 }
 
-int fill_philo(t_philos *ph)
+t_philo **all_philos(t_nums nums)
 {
-    ph->phs = malloc(sizeof(t_ph) * ph->total);
+	t_philo	**all;
+	int		i;
+
+	i = -1;
+	all = malloc(sizeof(t_philo *) * nums.num_of_phs);
+	if (!all)
+		return (NULL);
+	while (++i < nums.num_of_phs)
+	{
+		all[i] = get_one_philo(nums, i);
+		if (!all[i])
+			return (free_all(all, i));
+	}
+	return (all);
 }
 
-void    print_info(t_info *ps)
+void	wire_philos(t_philo **all, int size)
 {
-    printf("Number of philos %d\n", ps->number_of_ph);
-    printf("time to die %f\n", ps->td);
-    printf("time to eat %f\n", ps->te);
-    printf("time to sleep %f\n", ps->ts);
-    printf("num of meals %d\n", ps->num_of_meals);
+	int	left;
+	int	right;
+	int	i;
+
+	i = -1;
+	while (++i < size)
+	{
+		right = (i - 1 + size) % size;
+		left = (i + 1 + size) % size;
+		all[i]->left = all[left];
+		all[i]->right = all[right];
+	}
+
+}
+
+t_philo	*get_one_philo(t_nums nums, int	id)
+{
+	t_philo *p;
+
+	p = malloc(sizeof(t_philo));
+	if (!p)
+		return (NULL);
+	p->id = id;
+	p->td = nums.td;
+	p->te = nums.te;
+	p->ts = nums.ts;
+	p->max_meals = nums.meals;
+	p->total = nums.num_of_phs;
+	p->state = 'T';
+	pthread_mutex_init(&p->my_fork, NULL);
+	return (p);
+}
+
+t_philo	**free_all(t_philo **all, int index)
+{
+	while (--index >= 0)
+		free(all[index]);
+	free(all);
+	return (NULL);
 }

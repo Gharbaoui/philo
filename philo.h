@@ -1,37 +1,50 @@
 #include <pthread.h>
+#include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <unistd.h>
 
-typedef struct s_ph
+typedef struct s_philo
 {
-    int     id;
-    char    status;
-    int     counter;
-}   t_ph;
+	int				*current_index;
+	int				total;
+	int				max_meals;
+	int				id;
+	float			td;
+	float			ts;
+	float			te;
+	float			last_time_eat;
+	int				meals;
+	char			state;
+	struct s_philo	*left;
+	struct s_philo	*right;
+	pthread_mutex_t	my_fork;
+}	t_philo;
 
-typedef struct s_philos
+typedef struct s_nums
 {
-    int     total;
-    t_ph    *phs;
-}   t_philos;
+	int		num_of_phs;
+	float	td;
+	float	te;
+	float	ts;
+	int		meals;
+}	t_nums;
 
-typedef struct s_info
-{
-    t_philos    *philos;
-    int         number_of_ph;
-    int         forks_av;
-    float       td;
-    float       te;
-    float       ts;
-    int         num_of_meals;
-    
-}   t_info;
-
+/* utilis    */
+void	fill_nums(t_nums *nums, char **nums_str, int size);
+int	init_philos(int argc, char **argv, t_philo **start);
+int	non_number(char **nums, int size);
 long    help_ft_atoi(const char *str, int np);
 long    ft_atoi(char *str);
-int	is_number(char *num);
 int	is_digit(char c);
-int fill_info(t_info *ps, char **args, int argc);
-int fill_philo(t_philos *ph);
-void    print_info(t_info *ps);
+int	is_number(char *num);
+t_philo **all_philos(t_nums nums);
+t_philo	*get_one_philo(t_nums nums, int	id);
+t_philo	**free_all(t_philo **all, int index);
+void	wire_philos(t_philo **all, int size);
+
+////// thread  
+int	start_simulation(t_philo *ph);
+void	*life_cycle_of_ph(void *data);
+
+////// print
+void	print_sampl(t_philo *ph);
