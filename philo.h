@@ -15,7 +15,7 @@ typedef struct s_philo
 	float			td;
 	float			ts;
 	float			te;
-	float			last_time_eat;
+	long			last_time_eat;
 	int				meals;
 	char			state;
 	struct s_philo	*left;
@@ -56,6 +56,7 @@ long	get_time();
 ////// thread  
 int	start_simulation(t_philo *ph);
 void	*life_cycle_of_ph(void *data);
+void	ft_usleep(long delay);
 
 ////// print
 void	print_sampl(t_philo *ph);
@@ -65,6 +66,7 @@ void	fork_taken_msg(long time, int id, pthread_mutex_t *plock);
 void	eating_msg(t_philo *ph);
 void	sleeping_msg(t_philo *ph);
 void	thinking_msg(t_philo *ph);
+void	die_msg(t_philo *ph);
 void	state_thinking(t_philo *ph);
 void	take_forks(t_philo *ph);
 void	drop_forks(t_philo *ph);

@@ -47,6 +47,11 @@ void	*life_cycle_of_ph(void *data)
 		{
 			state_sleeping(ph);
 		}
+		if (get_time() - ph->last_time_eat > (ph->td / 1000))
+		{
+			die_msg(ph);
+			pthread_mutex_unlock(ph->done);
+		}
 	}
 }
 ////// thinking state
@@ -55,8 +60,8 @@ void	state_thinking(t_philo *ph)
 	take_forks(ph);
 	ph->state = 'E';
 	eating_msg(ph);
-	usleep(ph->te);
-	ph->last_time_eat = get_time();
+	ft_usleep(ph->te);
+	ph->last_time_eat = get_time(); //// in miliseconds
 	if (ph->max_meals > 0)
 		check_num_meals(ph);
 	drop_forks(ph);
@@ -96,7 +101,7 @@ void	state_eating(t_philo *ph)
 	ph->state = 'S';
 	///// display [sleeping]
 	sleeping_msg(ph);
-	usleep(ph->ts);
+	ft_usleep(ph->ts);
 }
 
 void	state_sleeping(t_philo *ph)
