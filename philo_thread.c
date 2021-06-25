@@ -4,7 +4,7 @@ int	start_simulation(t_philo *ph)
 {
 	int			i;
 	int			size;
-	pthread_t	thrs[ph->total + 1];
+	pthread_t	thrs[ph->total + 2];
 
 	i = 0;
 	size = ph->total;
@@ -12,6 +12,7 @@ int	start_simulation(t_philo *ph)
 	(*ph->start_time) = get_time();
 	while (i < size)
 	{
+		ph->last_time_eat = get_time();
 		pthread_create(thrs + i, NULL, &life_cycle_of_ph, (void *)ph);
 		ph = ph->left->left;
 		i += 2;
@@ -21,10 +22,12 @@ int	start_simulation(t_philo *ph)
 	ph = ph->left;
 	while (i < size)
 	{
+		ph->last_time_eat = get_time();
 		pthread_create(thrs + i, NULL, &life_cycle_of_ph, (void *)ph);
 		ph = ph->left->left;
 		i += 2;
 	}
+	pthread_create(&thrs[ph->total + 1], NULL, &is_all_live, ph);
 	pthread_join(thrs[ph->total] , NULL);
 }
 
@@ -47,21 +50,18 @@ void	*life_cycle_of_ph(void *data)
 		{
 			state_sleeping(ph);
 		}
-		if (get_time() - ph->last_time_eat > (ph->td / 1000))
-		{
-			die_msg(ph);
-			pthread_mutex_unlock(ph->done);
-		}
 	}
 }
 ////// thinking state
 void	state_thinking(t_philo *ph)
 {
+	long	stime;
 	take_forks(ph);
 	ph->state = 'E';
+	stime = get_time();
 	eating_msg(ph);
-	ft_usleep(ph->te);
 	ph->last_time_eat = get_time(); //// in miliseconds
+	ft_usleep(ph->te - ((get_time() - stime) * 1000));
 	if (ph->max_meals > 0)
 		check_num_meals(ph);
 	drop_forks(ph);
@@ -98,10 +98,12 @@ void	check_num_meals(t_philo *ph)
 ///// eating state
 void	state_eating(t_philo *ph)
 {
+	long	stime;
 	ph->state = 'S';
 	///// display [sleeping]
+	stime = get_time();
 	sleeping_msg(ph);
-	ft_usleep(ph->ts);
+	ft_usleep(ph->ts - ((get_time() - stime) * 1000));
 }
 
 void	state_sleeping(t_philo *ph)

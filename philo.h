@@ -56,6 +56,7 @@ long	get_time();
 ////// thread  
 int	start_simulation(t_philo *ph);
 void	*life_cycle_of_ph(void *data);
+void	*is_all_live(void	*data);
 void	ft_usleep(long delay);
 
 ////// print

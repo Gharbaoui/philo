@@ -46,7 +46,6 @@ void	thinking_msg(t_philo *ph)
 
 void	die_msg(t_philo *ph)
 {
-	pthread_mutex_lock(ph->print_lock);
 	ft_putnbr(get_time() - *ph->start_time);
 	write (1, " ", 1);
 	ft_putnbr(ph->id);
