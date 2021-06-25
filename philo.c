@@ -9,6 +9,6 @@ int	main(int argc, char **argv)
 		if (!init_philos(argc, argv, &start_philo))
 			return (0);
 		start_simulation(start_philo);
-		sleep(10);
+		//print_all(start_philo);
 	}
 }

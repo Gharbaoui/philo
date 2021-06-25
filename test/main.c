@@ -1,12 +1,13 @@
+#include <stdio.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <sys/time.h>
+
 int main()
 {
-	char c;
-	int val;
-
-	val = 1;
-	c = 'a';
-	if (c == 'a')
-		c = 'a';
-	if (val == 1)
-		val = 1;
+	struct timeval current_time;
+	sleep(2);
+	gettimeofday(&current_time, NULL);
+	printf("seconds : %ld\nmicro seconds : %ld\n",
+    current_time.tv_sec, current_time.tv_usec);
 }
