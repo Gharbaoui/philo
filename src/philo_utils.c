@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philo_utils.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mel-ghar <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/06/26 11:55:50 by mel-ghar          #+#    #+#             */
+/*   Updated: 2021/06/26 11:55:52 by mel-ghar         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 int	init_philos(int argc, char **argv, t_philo **start)
@@ -9,21 +21,23 @@ int	init_philos(int argc, char **argv, t_philo **start)
 	done = malloc(sizeof(pthread_mutex_t));
 	if (!done || non_number(argv, argc))
 		return (0);
-	fill_nums(&nums, argv, argc);
+	if (fill_nums(&nums, argv, argc))
+		return (0);
 	all = all_philos(nums);
 	pthread_mutex_init(done, NULL);
 	pthread_mutex_lock(done);
 	link_all_to_done(all, nums.num_of_phs, done);
 	*start = *all;
 	wire_philos(all, nums.num_of_phs);
+	free(all);
 	return (1);
 }
 
 void	link_all_to_done(t_philo **all, int size, pthread_mutex_t *done)
 {
-	int		i;
-	int		*eaten;
-	long	*start_time;
+	int				i;
+	int				*eaten;
+	long			*start_time;
 	pthread_mutex_t	*eat_lock;
 	pthread_mutex_t	*print_lock;
 
@@ -45,7 +59,7 @@ void	link_all_to_done(t_philo **all, int size, pthread_mutex_t *done)
 	}
 }
 
-t_philo **all_philos(t_nums nums)
+t_philo	**all_philos(t_nums nums)
 {
 	t_philo	**all;
 	int		i;
@@ -77,12 +91,11 @@ void	wire_philos(t_philo **all, int size)
 		all[i]->left = all[left];
 		all[i]->right = all[right];
 	}
-
 }
 
 t_philo	*get_one_philo(t_nums nums, int	id)
 {
-	t_philo *p;
+	t_philo	*p;
 
 	p = malloc(sizeof(t_philo));
 	if (!p)
@@ -96,37 +109,4 @@ t_philo	*get_one_philo(t_nums nums, int	id)
 	p->state = 'T';
 	pthread_mutex_init(&p->fork, NULL);
 	return (p);
-}
-
-t_philo	**free_all(t_philo **all, int index)
-{
-	while (--index >= 0)
-		free(all[index]);
-	free(all);
-	return (NULL);
-}
-
-void	ft_putchar(char c)
-{
-	write (1, &c, 1);
-}
-
-void	ft_putnbr(long nb)
-{
-	if (nb >= 10)
-	{
-		ft_putnbr(nb / 10);
-		nb = nb % 10;
-	}
-	if (nb < 10)
-		ft_putchar(nb + 48);
-}
-
-void	ft_putstr(char *str)
-{
-	int	i;
-
-	i = -1;
-	while (str[++i])
-		write(1, str + i, 1);
 }

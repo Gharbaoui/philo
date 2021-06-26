@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   mesag.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mel-ghar <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/06/26 11:55:10 by mel-ghar          #+#    #+#             */
+/*   Updated: 2021/06/26 11:55:11 by mel-ghar         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 void	fork_taken_msg(long time, int id, pthread_mutex_t *plock)
@@ -49,5 +61,5 @@ void	die_msg(t_philo *ph)
 	ft_putnbr(get_time() - *ph->start_time);
 	write (1, " ", 1);
 	ft_putnbr(ph->id);
-	write (1, " died\n", 5);
+	write (1, " died\n", 6);
 }
