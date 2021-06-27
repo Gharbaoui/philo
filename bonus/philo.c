@@ -20,5 +20,15 @@ int	main(int argc, char **argv)
 			return (1);
 		}
 		start_simulation(info, pids);
+        wait_for_all(pids, info->num_of_phs);
 	}
+}
+
+void    wait_for_all(int *pids, int size)
+{
+    int i;
+
+    i = -1;
+    while (++i < size)
+        wait(NULL);
 }
