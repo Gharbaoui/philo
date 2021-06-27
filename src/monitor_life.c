@@ -6,7 +6,7 @@
 /*   By: mel-ghar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/26 11:55:17 by mel-ghar          #+#    #+#             */
-/*   Updated: 2021/06/26 11:55:18 by mel-ghar         ###   ########.fr       */
+/*   Updated: 2021/06/26 13:01:59 by mel-ghar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,14 @@ void	start_simulation(t_philo *ph)
 
 void	wait_for_secon(int *i, t_philo **ph)
 {
+	int	size;
+
+	size = (*ph)->total;
 	*i = 1;
-	usleep(200);
-	*ph = (*ph)->left;
+	usleep(100);
+	if (size % 2 == 0)
+		*ph = (*ph)->left;
+	usleep(100);
 }
 
 void	init_vars(pthread_t **thrs, int *size, int *i, t_philo *ph)
