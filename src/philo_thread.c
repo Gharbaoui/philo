@@ -6,7 +6,7 @@
 /*   By: mel-ghar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/26 11:55:35 by mel-ghar          #+#    #+#             */
-/*   Updated: 2021/06/26 11:55:37 by mel-ghar         ###   ########.fr       */
+/*   Updated: 2021/06/28 07:58:49 by mel-ghar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	state_thinking(t_philo *ph)
 	ph->state = 'E';
 	stime = get_time();
 	eating_msg(ph);
-	ph->last_time_eat = get_time();/// this will need to move one line up
+	ph->last_time_eat = get_time();
 	ft_usleep(ph->te - ((get_time() - stime) * 1000));
 	if (ph->max_meals > 0)
 		check_num_meals(ph);

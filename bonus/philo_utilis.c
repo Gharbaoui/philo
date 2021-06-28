@@ -27,18 +27,23 @@ t_philo **get_philos(t_info info)
     int     size;
     sem_t   *s_p;
     sem_t   *forks;
+    sem_t   *s_died;
     t_philo **philos;
     
     i = -1;
     size = info.num_of_phs;
-    s_p = sem_open("sem_print", O_CREAT, 0777, 1);
-    forks = sem_open("sem_forks", O_CREAT, 0777, info.num_of_phs);
+
+	s_p = get_sem("sem_print", 1);
+	forks = get_sem("sem_forks", info.num_of_phs);
+	s_died = get_sem("sem_died", 1);
+	sem_wait(s_died);
     philos = malloc(sizeof(t_philo *) * size);
     while (++i < size)
     {
         philos[i] = get_one_philo(info, i);
         philos[i]->s_print = s_p;
         philos[i]->s_forks = forks;
+		philos[i]->s_died = s_died;
     }
     return (philos);
 }
@@ -56,7 +61,24 @@ t_philo *get_one_philo(t_info info, int id)
     ph->max_meals = info.meals;
     ph->meals = 0;
     ph->name_done_eat = ft_itoa(id);
+	sem_unlink(ph->name_done_eat);
     ph->s_done_eat = sem_open(ph->name_done_eat, O_CREAT, 0777, 1);
     sem_wait(ph->s_done_eat);
     return (ph);
+}
+
+t_sem_info	*get_direct_access(t_philo **phs, t_info info, int *pids)
+{
+	int			i;
+	t_sem_info	*tmp;
+	
+	i = -1;
+	tmp = malloc(sizeof(t_sem_info));
+	tmp->sem_eat = malloc(sizeof(sem_t *) * info.num_of_phs);
+	while (++i < info.num_of_phs)
+		tmp->sem_eat[i] = phs[i]->s_done_eat;
+	tmp->s_d = phs[0]->s_died;
+	tmp->pids = pids;
+	tmp->size = info.num_of_phs;
+	return (tmp);
 }

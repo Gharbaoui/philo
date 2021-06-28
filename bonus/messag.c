@@ -3,7 +3,7 @@
 void	fork_taken_msg(t_philo *ph)
 {
     sem_wait(ph->s_print);
-	ft_putnbr(get_time() - ph->start_time);
+	ft_putnbr((get_time_sleep() - ph->start_time) / 1000);
 	write(1, " ", 1);
 	ft_putnbr(ph->id);
 	write(1, " ", 1);
@@ -14,17 +14,18 @@ void	fork_taken_msg(t_philo *ph)
 void	eating_msg(t_philo *ph)
 {
     sem_wait(ph->s_print);
-	ft_putnbr(get_time() - ph->start_time);
+	ft_putnbr((get_time_sleep() - ph->start_time) / 1000);
 	write (1, " ", 1);
 	ft_putnbr(ph->id);
 	write (1, " ", 1);
 	ft_putstr("is eating\n");
+	sem_post(ph->s_print);
 }
 
 void	sleeping_msg(t_philo *ph)
 {
     sem_wait(ph->s_print);
-	ft_putnbr(get_time() - ph->start_time);
+	ft_putnbr((get_time_sleep() - ph->start_time) / 1000);
 	write (1, " ", 1);
 	ft_putnbr(ph->id);
 	write (1, " ", 1);
@@ -35,7 +36,7 @@ void	sleeping_msg(t_philo *ph)
 void	thinking_msg(t_philo *ph)
 {
     sem_wait(ph->s_print);
-	ft_putnbr(get_time() - ph->start_time);
+	ft_putnbr((get_time_sleep() - ph->start_time) / 1000);
 	write (1, " ", 1);
 	ft_putnbr(ph->id);
 	write (1, " ", 1);
@@ -45,7 +46,7 @@ void	thinking_msg(t_philo *ph)
 
 void	die_msg(t_philo *ph)
 {
-	ft_putnbr(get_time() - ph->start_time);
+	ft_putnbr((get_time_sleep() - ph->start_time) / 1000);
 	write (1, " ", 1);
 	ft_putnbr(ph->id);
 	write (1, " died\n", 6);

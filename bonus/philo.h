@@ -5,25 +5,35 @@
 #include <pthread.h>
 #include <semaphore.h>
 #include <sys/types.h>
-#include <wait.h>
+#include <sys/wait.h>
 #include <sys/time.h>
+#include <signal.h>
 
 typedef struct s_philo
 {
     int     id;
-    int     td;
-    int     te;
-    int     ts;
-    int     start_time;
+    long	td;
+    long	te;
+    long	ts;
+    unsigned long long	start_time;
     int     max_meals;
     int     meals;
     char    *name_done_eat;
     char    status;
-    int     last_time_eat;
+    unsigned long long	last_time_eat;
     sem_t   *s_print;
     sem_t   *s_forks;
     sem_t   *s_done_eat;
+	sem_t	*s_died;
 }	t_philo;
+
+typedef	struct	s_sem_info
+{
+	int		size;
+	sem_t	**sem_eat;
+	sem_t	*s_d;
+	int		*pids;
+}	t_sem_info;
 
 typedef struct s_info
 {
@@ -61,12 +71,23 @@ void    wait_for_all(int *pids, int size);
 long	get_time(void);
 void    state_thinking(t_philo *ph);
 void    state_eating(t_philo *ph);
+void	state_sleeping(t_philo *ph);
 void    liveness_thread(t_philo *ph);
+void	*live_or_dead(void *philo);
 /// messages
 void	fork_taken_msg(t_philo *ph);
 void	eating_msg(t_philo *ph);
 void	sleeping_msg(t_philo *ph);
 void	thinking_msg(t_philo *ph);
+void	*see_all(void *data);
 void	die_msg(t_philo *ph);
 void	ft_usleep(long delay);
 void    check_if_hes_done(t_philo *ph);
+void	check_all_proccess(t_philo **philos, int *pids, t_info info);
+t_sem_info	*get_direct_access(t_philo **phs, t_info info, int *pids);
+void	kill_all(int *pids, int size);
+sem_t	*get_sem(char *name, int value);
+unsigned long long	get_time_sleep(void);
+void	set_time(t_philo **philos, int size);
+void	*done_eating(void *data);
+void	clean_sms(int size);
