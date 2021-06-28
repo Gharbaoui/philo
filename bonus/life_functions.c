@@ -19,6 +19,7 @@ void	*live_or_dead(void *philo)
 		}
 		usleep(100);
 	}
+	return (NULL);
 }
 
 sem_t	*get_sem(char *name, int value)

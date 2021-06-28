@@ -11,20 +11,20 @@
 
 typedef struct s_philo
 {
-    int     id;
-    long	td;
-    long	te;
-    long	ts;
+    int     			id;
+    unsigned long long	td;
+    long				te;
+    long				ts;
     unsigned long long	start_time;
-    int     max_meals;
-    int     meals;
-    char    *name_done_eat;
-    char    status;
+    int     			max_meals;
+    int     			meals;
+    char    			*name_done_eat;
+    char    			status;
     unsigned long long	last_time_eat;
-    sem_t   *s_print;
-    sem_t   *s_forks;
-    sem_t   *s_done_eat;
-	sem_t	*s_died;
+    sem_t   			*s_print;
+    sem_t   			*s_forks;
+    sem_t   			*s_done_eat;
+	sem_t				*s_died;
 }	t_philo;
 
 typedef	struct	s_sem_info
@@ -67,7 +67,6 @@ void    start_philos(t_philo **philos, int *pids, t_info info);
 void    life_cycle_of_philo(t_philo *philo);
 ////// print
 void    print_info(t_philo *ph);
-void    wait_for_all(int *pids, int size);
 long	get_time(void);
 void    state_thinking(t_philo *ph);
 void    state_eating(t_philo *ph);

@@ -86,4 +86,5 @@ void	*done_eating(void *data)
 	clean_sms(size);
 	kill_all(sms->pids, sms->size);
 	kill(sms->pids[size], SIGINT);
+	return (NULL);
 }
