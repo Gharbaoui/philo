@@ -79,6 +79,7 @@ t_sem_info	*get_direct_access(t_philo **phs, t_info info, int *pids)
 		tmp->sem_eat[i] = phs[i]->s_done_eat;
 	tmp->s_d = phs[0]->s_died;
 	tmp->pids = pids;
+	tmp->s_print = phs[0]->s_print;
 	tmp->size = info.num_of_phs;
 	return (tmp);
 }

@@ -32,6 +32,7 @@ typedef	struct	s_sem_info
 	int		size;
 	sem_t	**sem_eat;
 	sem_t	*s_d;
+	sem_t	*s_print;
 	int		*pids;
 }	t_sem_info;
 

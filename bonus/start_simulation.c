@@ -67,7 +67,9 @@ void	*see_all(void *data)
 
 	sms = (t_sem_info *)data;
 	sem_wait(sms->s_d);
+	clean_sms(sms->size);
 	kill_all(sms->pids, sms->size);
+	kill(sms->pids[sms->size], SIGINT);
 	return (NULL);
 }
 
@@ -83,6 +85,7 @@ void	*done_eating(void *data)
 	i = -1;
 	while (++i < size)
 		sem_wait(sms->sem_eat[i]);
+	sem_wait(sms->s_print);
 	clean_sms(size);
 	kill_all(sms->pids, sms->size);
 	kill(sms->pids[size], SIGINT);
