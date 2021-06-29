@@ -6,7 +6,7 @@
 /*   By: mel-ghar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/26 11:56:17 by mel-ghar          #+#    #+#             */
-/*   Updated: 2021/06/26 11:56:18 by mel-ghar         ###   ########.fr       */
+/*   Updated: 2021/06/29 15:19:37 by mel-ghar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int	fill_nums(t_nums *nums, char **nums_str, int size)
 	if (size == 6)
 	{
 		nums->meals = ft_atoi(nums_str[5]);
-		if (nums->meals < 0)
+		if (nums->meals <= 0)
 			return (1);
 	}
 	if (nums->num_of_phs <= 0 || nums->td < 60 || nums->te < 60

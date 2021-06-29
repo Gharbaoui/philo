@@ -12,7 +12,7 @@ int	collect_data(int size, char **nums, t_info *info)
 	if (size == 6)
 	{
 		info->meals = ft_atoi(nums[5]);
-		if (info->meals < 0)
+		if (info->meals <= 0)
 			return (1);
 	}
 	if (info->num_of_phs <= 0 || info->num_of_phs > 200 || info->td < 60

@@ -6,7 +6,7 @@
 /*   By: mel-ghar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/26 11:55:17 by mel-ghar          #+#    #+#             */
-/*   Updated: 2021/06/26 13:01:59 by mel-ghar         ###   ########.fr       */
+/*   Updated: 2021/06/29 15:25:27 by mel-ghar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	*is_all_live(void	*data)
 	{
 		if (ph->state != 'E')
 		{
-			if (get_time() - ph->last_time_eat > (ph->td / 1000))
+			if (get_time_sleep() - ph->last_time_eat > ph->td)
 			{
 				pthread_mutex_lock(ph->print_lock);
 				die_msg(ph);
@@ -44,7 +44,7 @@ void	start_simulation(t_philo *ph)
 	init_vars(&thrs, &size, &i, ph);
 	while (i < size)
 	{
-		ph->last_time_eat = get_time();
+		ph->last_time_eat = get_time_sleep();
 		pthread_create(thrs + i, NULL, &life_cycle_of_ph, (void *)ph);
 		ph = ph->left->left;
 		i += 2;
@@ -52,7 +52,7 @@ void	start_simulation(t_philo *ph)
 	wait_for_secon(&i, &ph);
 	while (i < size)
 	{
-		ph->last_time_eat = get_time();
+		ph->last_time_eat = get_time_sleep();
 		pthread_create(thrs + i, NULL, &life_cycle_of_ph, (void *)ph);
 		ph = ph->left->left;
 		i += 2;
@@ -80,13 +80,13 @@ void	init_vars(pthread_t **thrs, int *size, int *i, t_philo *ph)
 	*i = 0;
 	*thrs = malloc(sizeof(pthread_t) * (ph->total + 2));
 	*size = ph->total;
-	(*ph->start_time) = get_time();
+	(*ph->start_time) = get_time_sleep();
 }
 
-long	get_time(void)
+unsigned long long	get_time_sleep(void)
 {
 	struct timeval	cur;
 
 	gettimeofday(&cur, NULL);
-	return ((cur.tv_sec * 1000) + (cur.tv_usec) / 1000);
+	return ((cur.tv_sec * 1000000) + cur.tv_usec);
 }

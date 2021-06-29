@@ -6,7 +6,7 @@
 /*   By: mel-ghar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/26 11:56:25 by mel-ghar          #+#    #+#             */
-/*   Updated: 2021/06/29 14:27:25 by mel-ghar         ###   ########.fr       */
+/*   Updated: 2021/06/29 15:07:52 by mel-ghar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,12 @@ void	ft_usleep(long delay)
 	long	newdelay;
 
 	newdelay = delay - 10000;
-	start = get_time() * 1000;
+	start = get_time_sleep();
 	usleep(newdelay);
 	while (1)
 	{
-		cur = get_time() * 1000;
-		if (cur - start >= (delay + 500))
+		cur = get_time_sleep();
+		if (cur - start >= delay)
 			return ;
 	}
 }
@@ -47,9 +47,9 @@ void	ft_usleep(long delay)
 void	take_forks(t_philo *ph)
 {
 	pthread_mutex_lock(&ph->fork);
-	fork_taken_msg(get_time() - *ph->start_time, ph->id, ph->print_lock);
+	fork_taken_msg(get_time_sleep() - *ph->start_time, ph->id, ph->print_lock);
 	pthread_mutex_lock(&ph->left->fork);
-	fork_taken_msg(get_time() - *ph->start_time, ph->id, ph->print_lock);
+	fork_taken_msg(get_time_sleep() - *ph->start_time, ph->id, ph->print_lock);
 }
 
 void	drop_forks(t_philo *ph)

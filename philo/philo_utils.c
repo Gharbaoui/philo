@@ -6,7 +6,7 @@
 /*   By: mel-ghar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/26 11:55:50 by mel-ghar          #+#    #+#             */
-/*   Updated: 2021/06/26 12:27:35 by mel-ghar         ###   ########.fr       */
+/*   Updated: 2021/06/29 15:29:00 by mel-ghar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,18 +35,18 @@ int	init_philos(int argc, char **argv, t_philo **start)
 
 void	link_all_to_done(t_philo **all, int size, pthread_mutex_t *done)
 {
-	int				i;
-	int				*eaten;
-	long			*start_time;
-	pthread_mutex_t	*eat_lock;
-	pthread_mutex_t	*print_lock;
+	int					i;
+	int					*eaten;
+	unsigned long long	*start_time;
+	pthread_mutex_t		*eat_lock;
+	pthread_mutex_t		*print_lock;
 
 	eat_lock = malloc(sizeof(pthread_mutex_t));
 	print_lock = malloc(sizeof(pthread_mutex_t));
 	pthread_mutex_init(eat_lock, NULL);
 	pthread_mutex_init(print_lock, NULL);
 	eaten = malloc(sizeof(int));
-	start_time = malloc(sizeof(long));
+	start_time = malloc(sizeof(unsigned long long));
 	*eaten = 0;
 	i = -1;
 	while (++i < size)

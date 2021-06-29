@@ -6,16 +6,16 @@
 /*   By: mel-ghar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/26 11:55:10 by mel-ghar          #+#    #+#             */
-/*   Updated: 2021/06/26 11:55:11 by mel-ghar         ###   ########.fr       */
+/*   Updated: 2021/06/29 15:07:26 by mel-ghar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	fork_taken_msg(long time, int id, pthread_mutex_t *plock)
+void	fork_taken_msg(unsigned long long time, int id, pthread_mutex_t *plock)
 {
 	pthread_mutex_lock(plock);
-	ft_putnbr(time);
+	ft_putnbr(time / 1000);
 	write(1, " ", 1);
 	ft_putnbr((long)id);
 	write(1, " ", 1);
@@ -26,7 +26,7 @@ void	fork_taken_msg(long time, int id, pthread_mutex_t *plock)
 void	eating_msg(t_philo *ph)
 {
 	pthread_mutex_lock(ph->print_lock);
-	ft_putnbr(get_time() - *ph->start_time);
+	ft_putnbr((get_time_sleep() - *ph->start_time) / 1000);
 	write (1, " ", 1);
 	ft_putnbr(ph->id);
 	write (1, " ", 1);
@@ -37,7 +37,7 @@ void	eating_msg(t_philo *ph)
 void	sleeping_msg(t_philo *ph)
 {
 	pthread_mutex_lock(ph->print_lock);
-	ft_putnbr(get_time() - *ph->start_time);
+	ft_putnbr((get_time_sleep() - *ph->start_time) / 1000);
 	write (1, " ", 1);
 	ft_putnbr(ph->id);
 	write (1, " ", 1);
@@ -48,7 +48,7 @@ void	sleeping_msg(t_philo *ph)
 void	thinking_msg(t_philo *ph)
 {
 	pthread_mutex_lock(ph->print_lock);
-	ft_putnbr(get_time() - *ph->start_time);
+	ft_putnbr((get_time_sleep() - *ph->start_time) / 1000);
 	write (1, " ", 1);
 	ft_putnbr(ph->id);
 	write (1, " ", 1);
@@ -58,7 +58,7 @@ void	thinking_msg(t_philo *ph)
 
 void	die_msg(t_philo *ph)
 {
-	ft_putnbr(get_time() - *ph->start_time);
+	ft_putnbr((get_time_sleep() - *ph->start_time) / 1000);
 	write (1, " ", 1);
 	ft_putnbr(ph->id);
 	write (1, " died\n", 6);
