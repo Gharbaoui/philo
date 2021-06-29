@@ -44,7 +44,7 @@ void	start_simulation(t_philo *ph)
 	init_vars(&thrs, &size, &i, ph);
 	while (i < size)
 	{
-		ph->last_time_eat = get_time_sleep();
+		ph->last_time_eat = *ph->start_time;/// change here
 		pthread_create(thrs + i, NULL, &life_cycle_of_ph, (void *)ph);
 		ph = ph->left->left;
 		i += 2;
@@ -52,7 +52,7 @@ void	start_simulation(t_philo *ph)
 	wait_for_secon(&i, &ph);
 	while (i < size)
 	{
-		ph->last_time_eat = get_time_sleep();
+		ph->last_time_eat = *ph->start_time; //// change here
 		pthread_create(thrs + i, NULL, &life_cycle_of_ph, (void *)ph);
 		ph = ph->left->left;
 		i += 2;
@@ -67,9 +67,8 @@ void	wait_for_secon(int *i, t_philo **ph)
 {
 	int	size;
 
-	size = (*ph)->total;
+	size = (*ph)->total;//// removed ft_usleep here
 	*i = 1;
-	usleep(100);
 	if (size % 2 == 0)
 		*ph = (*ph)->left;
 	usleep(100);
