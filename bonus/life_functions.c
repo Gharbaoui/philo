@@ -2,9 +2,9 @@
 
 void	*live_or_dead(void *philo)
 {
-	t_philo *ph;
+	t_philo	*ph;
 
-	ph = (t_philo *)philo;/// working on life of philos is deadd
+	ph = (t_philo *)philo;
 	while (1)
 	{
 		if (ph->status != 'E')
@@ -27,4 +27,3 @@ sem_t	*get_sem(char *name, int value)
 	sem_unlink(name);
 	return (sem_open(name, O_CREAT, 0777, value));
 }
-

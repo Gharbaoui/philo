@@ -1,45 +1,36 @@
 #include "philo.h"
 
-void    life_cycle_of_philo(t_philo *philo)
+void	life_cycle_of_philo(t_philo *philo)
 {
-   	liveness_thread(philo);
-    while (1)
-    {
-        if (philo->status == 'T')
-            state_thinking(philo);
-        else if (philo->status == 'E')
-            state_eating(philo);
+	liveness_thread(philo);
+	while (1)
+	{
+		if (philo->status == 'T')
+			state_thinking(philo);
+		else if (philo->status == 'E')
+			state_eating(philo);
 		else
 			state_sleeping(philo);
-    }
+	}
 }
 
-void    state_thinking(t_philo *ph)
+void	state_thinking(t_philo *ph)
 {
-    sem_wait(ph->s_forks);
-    fork_taken_msg(ph);
-    sem_wait(ph->s_forks);
-    fork_taken_msg(ph);
-    ph->status = 'E';
-    ph->last_time_eat = get_time_sleep();
-    eating_msg(ph);
-    ft_usleep(ph->te);
-    if (ph->max_meals > 0) //// maybe i will change it to >= 0 not > 0
-        check_if_hes_done(ph);
-    sem_post(ph->s_forks);
-    sem_post(ph->s_forks);
+	sem_wait(ph->s_forks);
+	fork_taken_msg(ph);
+	sem_wait(ph->s_forks);
+	fork_taken_msg(ph);
+	ph->status = 'E';
+	ph->last_time_eat = get_time_sleep();
+	eating_msg(ph);
+	ft_usleep(ph->te);
+	if (ph->max_meals > 0)
+		check_if_hes_done(ph);
+	sem_post(ph->s_forks);
+	sem_post(ph->s_forks);
 }
 
-void    check_if_hes_done(t_philo *ph)
-{
-    ph->meals++;
-    if (ph->meals >= ph->max_meals)
-    {
-        sem_post(ph->s_done_eat);
-    }
-}
-
-void    state_eating(t_philo *ph)
+void	state_eating(t_philo *ph)
 {
 	ph->status = 'S';
 	sleeping_msg(ph);
@@ -52,7 +43,7 @@ void	state_sleeping(t_philo *ph)
 	thinking_msg(ph);
 }
 
-void    liveness_thread(t_philo *ph)
+void	liveness_thread(t_philo *ph)
 {
 	pthread_t	live_mont;
 

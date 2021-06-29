@@ -8,7 +8,6 @@ unsigned long long	get_time_sleep(void)
 	return ((cur.tv_sec * 1000000) + cur.tv_usec);
 }
 
-
 void	ft_usleep(long delay)
 {
 	long	start;
@@ -28,9 +27,9 @@ void	ft_usleep(long delay)
 
 void	set_time(t_philo **philos, int size)
 {
-	int i;
-	unsigned long long start_t;
-	unsigned long long last_eat;
+	int					i;
+	unsigned long long	start_t;
+	unsigned long long	last_eat;
 
 	i = -1;
 	start_t = get_time_sleep();
@@ -41,4 +40,3 @@ void	set_time(t_philo **philos, int size)
 		philos[i]->last_time_eat = last_eat;
 	}
 }
-
