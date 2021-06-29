@@ -6,7 +6,7 @@
 /*   By: mel-ghar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/26 11:56:25 by mel-ghar          #+#    #+#             */
-/*   Updated: 2021/06/26 14:14:22 by mel-ghar         ###   ########.fr       */
+/*   Updated: 2021/06/29 14:27:25 by mel-ghar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	ft_usleep(long delay)
 	while (1)
 	{
 		cur = get_time() * 1000;
-		if (cur - start >= delay)
+		if (cur - start >= (delay + 500))
 			return ;
 	}
 }
