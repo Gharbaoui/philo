@@ -6,6 +6,8 @@ int	start_simulation(t_info *info, int *pids)
 
     philos = get_philos(*info);
     start_philos(philos, pids, *info);
+	waitpid(pids[info->num_of_phs], NULL, 0);
+	//free_philos();
 	return (0);
 }
 

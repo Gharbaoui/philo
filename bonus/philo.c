@@ -20,6 +20,5 @@ int	main(int argc, char **argv)
 			return (1);
 		}
 		start_simulation(info, pids);
-		waitpid(pids[info->num_of_phs], NULL, 0);
 	}
 }

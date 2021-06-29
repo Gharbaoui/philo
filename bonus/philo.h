@@ -18,7 +18,6 @@ typedef struct s_philo
     unsigned long long	start_time;
     int     			max_meals;
     int     			meals;
-    char    			*name_done_eat;
     char    			status;
     unsigned long long	last_time_eat;
     sem_t   			*s_print;
