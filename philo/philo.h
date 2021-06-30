@@ -6,7 +6,7 @@
 /*   By: mel-ghar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/26 10:59:10 by mel-ghar          #+#    #+#             */
-/*   Updated: 2021/06/29 15:29:49 by mel-ghar         ###   ########.fr       */
+/*   Updated: 2021/06/30 08:07:16 by mel-ghar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,23 +20,23 @@
 
 typedef struct s_philo
 {
-	unsigned long long	*start_time;
-	int					*phs_eaten;
-	int					total;
-	int					max_meals;
-	int					id;
-	unsigned long long	td;
-	float				ts;
-	float				te;
-	unsigned long long	last_time_eat;
-	int					meals;
-	char				state;
-	struct s_philo		*left;
-	struct s_philo		*right;
-	pthread_mutex_t		fork;
-	pthread_mutex_t		*lock_phs_eaten;
-	pthread_mutex_t		*done;
-	pthread_mutex_t		*print_lock;
+	unsigned long long		*start_time;
+	int						*phs_eaten;
+	int						total;
+	int						max_meals;
+	int						id;
+	unsigned long long		td;
+	unsigned long long		ts;
+	unsigned long long		te;
+	unsigned long long		last_time_eat;
+	int						meals;
+	char					state;
+	struct s_philo			*left;
+	struct s_philo			*right;
+	pthread_mutex_t			fork;
+	pthread_mutex_t			*lock_phs_eaten;
+	pthread_mutex_t			*done;
+	pthread_mutex_t			*print_lock;
 }	t_philo;
 
 typedef struct s_nums
@@ -64,16 +64,14 @@ t_philo				**free_all(t_philo **all, int index);
 void				wire_philos(t_philo **all, int size);
 void				link_all_to_done(t_philo **all, int size,
 						pthread_mutex_t *done);
-long				get_time(void);
-unsigned long long	get_time_sleep(void);
+unsigned long long	get_time(void);
 void				start_simulation(t_philo *ph);
 void				wait_for_secon(int *i, t_philo **ph);
 void				init_vars(pthread_t **thrs, int *size, int *i, t_philo *ph);
 void				*life_cycle_of_ph(void *data);
 void				*is_all_live(void	*data);
-void				ft_usleep(long delay);
-void				fork_taken_msg(unsigned long long time,
-						int id, pthread_mutex_t *plock);
+void				ft_usleep(unsigned long long delay);
+void				fork_taken_msg(t_philo *ph);
 void				eating_msg(t_philo *ph);
 void				sleeping_msg(t_philo *ph);
 void				thinking_msg(t_philo *ph);

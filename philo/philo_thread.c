@@ -6,7 +6,7 @@
 /*   By: mel-ghar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/26 11:55:35 by mel-ghar          #+#    #+#             */
-/*   Updated: 2021/06/29 15:18:58 by mel-ghar         ###   ########.fr       */
+/*   Updated: 2021/06/30 07:23:57 by mel-ghar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,11 @@ void	*life_cycle_of_ph(void *data)
 
 void	state_thinking(t_philo *ph)
 {
-	long	stime;
-
 	take_forks(ph);
 	ph->state = 'E';
-	stime = get_time_sleep();
 	eating_msg(ph);
-	ph->last_time_eat = get_time_sleep();
-	ft_usleep(ph->te - ((get_time_sleep() - stime)));
+	ph->last_time_eat = get_time();
+	ft_usleep(ph->te);
 	if (ph->max_meals > 0)
 		check_num_meals(ph);
 	drop_forks(ph);
@@ -64,12 +61,9 @@ void	check_num_meals(t_philo *ph)
 
 void	state_eating(t_philo *ph)
 {
-	long	stime;
-
 	ph->state = 'S';
-	stime = get_time_sleep();
 	sleeping_msg(ph);
-	ft_usleep(ph->ts - ((get_time_sleep() - stime)));
+	ft_usleep(ph->ts);
 }
 
 void	state_sleeping(t_philo *ph)
