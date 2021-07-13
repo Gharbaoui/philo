@@ -6,7 +6,7 @@
 /*   By: mel-ghar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/26 11:55:25 by mel-ghar          #+#    #+#             */
-/*   Updated: 2021/06/26 11:55:27 by mel-ghar         ###   ########.fr       */
+/*   Updated: 2021/07/13 10:48:54 by mel-ghar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int	main(int argc, char **argv)
 		if (!init_philos(argc, argv, &start_philo))
 			return (0);
 		start_simulation(start_philo);
+		usleep(10000);
 		clear_all(start_philo);
 	}
 }
